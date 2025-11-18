@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjetas de Estudio: Teorías Clásicas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --primary: #6366F1;
+            --secondary: #8B5CF6;
+            --accent: #06D6A0;
+            --background: #0F172A;
+            --surface: #1E293B;
+            --text: #F8FAFC;
+            --text-secondary: #94A3B8;
+            
+            /* Colores para los autores - Cara A */
+            --adorno: #EF4444;
+            --lazarsfeld: #3B82F6;
+            --andion: #F59E0B;
+            --moya: #8B5CF6;
+            --schmucler: #10B981;
+            --mihael: #EC4899;
+            
+            /* Colores complementarios - Cara B */
+            --adorno-complement: #FEE2E2;
+            --lazarsfeld-complement: #DBEAFE;
+            --andion-complement: #FEF3C7;
+            --moya-complement: #EDE9FE;
+            --schmucler-complement: #D1FAE5;
+            --mihael-complement: #FCE7F3;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--background) 0%, #1E293B 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--adorno), var(--lazarsfeld), var(--andion), var(--moya), var(--schmucler), var(--mihael));
+        }
+        
+        h1 {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(5px);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-toggle {
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+        
+        .btn-toggle:hover {
+            background: rgba(236, 72, 153, 0.3);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.3);
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            color: var(--text);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .legend-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .legend-item.active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .legend-item.inactive {
+            opacity: 0.4;
+            filter: grayscale(0.7);
+        }
+        
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            height: 220px;
+            perspective: 1200px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+        
+        .card.hidden {
+            display: none;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            border-radius: 20px;
+        }
+        
+        .card-front {
+            color: white;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-back {
+            color: #1E293B;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .author {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.9;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        .answer {
+            line-height: 1.6;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .card-count {
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 0 auto 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Colores por autor - Cara A */
+        .adorno-color {
+            background: linear-gradient(135deg, var(--adorno) 0%, #DC2626 100%);
+        }
+        
+        .lazarsfeld-color {
+            background: linear-gradient(135deg, var(--lazarsfeld) 0%, #1D4ED8 100%);
+        }
+        
+        .andion-color {
+            background: linear-gradient(135deg, var(--andion) 0%, #D97706 100%);
+        }
+        
+        .moya-color {
+            background: linear-gradient(135deg, var(--moya) 0%, #7C3AED 100%);
+        }
+        
+        .schmucler-color {
+            background: linear-gradient(135deg, var(--schmucler) 0%, #059669 100%);
+        }
+        
+        .mihael-color {
+            background: linear-gradient(135deg, var(--mihael) 0%, #BE185D 100%);
+        }
+        
+        /* Colores complementarios - Cara B */
+        .adorno-back {
+            background: var(--adorno-complement);
+        }
+        
+        .lazarsfeld-back {
+            background: var(--lazarsfeld-complement);
+        }
+        
+        .andion-back {
+            background: var(--andion-complement);
+        }
+        
+        .moya-back {
+            background: var(--moya-complement);
+        }
+        
+        .schmucler-back {
+            background: var(--schmucler-complement);
+        }
+        
+        .mihael-back {
+            background: var(--mihael-complement);
+        }
+        
+        /* Efectos de brillo al pasar el mouse */
+        .card:hover .card-front {
+            filter: brightness(1.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .legend {
+                gap: 12px;
+            }
+            
+            .legend-item {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 90%;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Teorías Clásicas de la Comunicación</h1>
+            <p class="subtitle">56 tarjetas de estudio con diseño moderno y paleta de colores estética</p>
+            
+            <div class="controls">
+                <button class="btn" onclick="flipAllCards()">
+                    <i class="fas fa-sync-alt"></i> Voltear Todas
+                </button>
+                <button class="btn" onclick="resetAllCards()">
+                    <i class="fas fa-undo"></i> Reiniciar Todas
+                </button>
+                <button class="btn" onclick="shuffleCards()">
+                    <i class="fas fa-random"></i> Mezclar Tarjetas
+                </button>
+                <button class="btn btn-toggle" id="toggleMihaelBtn" onclick="toggleMihaelCards()">
+                    <i class="fas fa-eye-slash"></i> Ocultar Consejos
+                </button>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item" data-author="adorno">
+                    <div class="color-box adorno-color"></div>
+                    <span>Adorno & Horkheimer</span>
+                </div>
+                <div class="legend-item" data-author="lazarsfeld">
+                    <div class="color-box lazarsfeld-color"></div>
+                    <span>Lazarsfeld & Merton</span>
+                </div>
+                <div class="legend-item" data-author="andion">
+                    <div class="color-box andion-color"></div>
+                    <span>Eduardo Andión</span>
+                </div>
+                <div class="legend-item" data-author="moya">
+                    <div class="color-box moya-color"></div>
+                    <span>Constanza Moya</span>
+                </div>
+                <div class="legend-item" data-author="schmucler">
+                    <div class="color-box schmucler-color"></div>
+                    <span>Héctor Schmucler</span>
+                </div>
+                <div class="legend-item" data-author="mihael" id="mihaelLegend">
+                    <div class="color-box mihael-color"></div>
+                    <span>Consejos</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <div class="card-count" id="cardCount">Total: 56 tarjetas - 10 por autor teórico + 6 consejos de estudio</div>
+        </div>
+        
+        <div class="card-grid" id="cardContainer">
+            <!-- Tarjetas de Adorno y Horkheimer -->
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué es la Industria Cultural?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Sistema que produce bienes culturales estandarizados con fines de lucro y control social.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Por qué prefieren "Industria Cultural" sobre "Cultura de Masas"?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Porque enfatiza que la cultura es impuesta desde arriba, no surge espontáneamente del pueblo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué efecto tiene la Industria Cultural en la audiencia?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Vuelve a la audiencia pasiva, dócil y conformista, eliminando su capacidad crítica.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Cómo se relaciona la Industria Cultural con el capitalismo?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Es una extensión de la lógica capitalista que busca beneficio económico y control social.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué significa "Ilustración como engaño de masas"?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Los medios prometen ilustración pero en realidad adormecen y manipulan a las masas.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué caracteriza a los productos de la Industria Cultural?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Estandarización, previsibilidad y facilidad de consumo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué escuela representan Adorno y Horkheimer?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Escuela de Frankfurt (Teoría Crítica).</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué critican de la cultura de masas?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Que es una imposición desde arriba y no auténtica.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Cómo afecta la industria cultural al pensamiento crítico?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Lo elimina, impidiendo imaginar una sociedad diferente.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-adorno">
+                <div class="card-inner">
+                    <div class="card-front adorno-color">
+                        <div class="question">¿Qué relación tiene la industria cultural con el ocio?</div>
+                        <div class="author">Adorno & Horkheimer</div>
+                    </div>
+                    <div class="card-back adorno-back">
+                        <div class="answer">Es una extensión del trabajo, no un verdadero ocio liberador.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Lazarsfeld y Merton -->
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué es la Disfunción Narcotizante?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Efecto negativo donde la sobreinformación vuelve apática a la audiencia.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué es la Función Conferidora de Status?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Los medios otorgan prestigio e importancia a personas o temas al cubrirlos.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué es la Imposición de Normas Sociales?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Los medios refuerzan normas sociales al exponer desviaciones públicamente.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Cómo ven a los medios comparados con la Escuela de Frankfurt?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">No los ven todopoderosos, sino que analizan sus funciones sociales.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué escuela representa Lazarsfeld y Merton?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Funcionalismo o Mass Communication Research.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué problema identifica la Disfunción Narcotizante?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">La gente confunde estar informado con tomar acción real.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué es el funcionalismo en comunicación?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Enfoque que estudia las funciones de los medios en la sociedad.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué otras funciones tienen los medios según Lazarsfeld y Merton?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Entretenimiento, vigilancia, correlación social y transmisión cultural.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Cómo se relaciona la disfunción narcotizante con la democracia?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">La debilita al crear ciudadanos pasivos que no participan.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-lazarsfeld">
+                <div class="card-inner">
+                    <div class="card-front lazarsfeld-color">
+                        <div class="question">¿Qué método de investigación usaban?</div>
+                        <div class="author">Lazarsfeld & Merton</div>
+                    </div>
+                    <div class="card-back lazarsfeld-back">
+                        <div class="answer">Métodos cuantitativos, estudios de efectos y análisis funcional.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Eduardo Andión -->
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué es un "Campo" según Bourdieu/Andión?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Espacio social con reglas propias, luchas de poder y jerarquías.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué es el Capital Simbólico en el periodismo?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Prestigio, credibilidad, influencia y exclusivas (no dinero).</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué es el Habitus periodístico?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Formas de pensar y actuar propias del campo periodístico.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué campos presionan al periodismo?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Principalmente el campo político y el económico.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿En qué se basa la teoría de Andión?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">En la sociología de Pierre Bourdieu.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué busca el campo periodístico?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Autonomía para establecer sus propias reglas.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué es el capital económico en el campo periodístico?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Aunque no es lo principal, el dinero también influye en el campo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Cómo se adquiere habitus?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">A través de la socialización en el campo y la práctica continua.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Qué es la autonomía del campo periodístico?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">La capacidad de establecer sus propias reglas sin influencia externa.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-andion">
+                <div class="card-inner">
+                    <div class="card-front andion-color">
+                        <div class="question">¿Cómo influye el campo político en el periodismo?</div>
+                        <div class="author">Eduardo Andión</div>
+                    </div>
+                    <div class="card-back andion-back">
+                        <div class="answer">Intenta imponer sus agendas y controlar la información.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Constanza Moya -->
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué son los Actos de Habla?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">Acciones que realizamos al hablar, más allá de transmitir información.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué es el Acto Ilocutivo?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">La intención o fuerza de lo que se dice (prometer, ordenar, preguntar).</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué es el Acto Perlocutivo?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">El efecto que se logra en el oyente (persuadir, asustar, convencer).</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué es la Acción Comunicativa según Habermas?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">Usar el lenguaje para buscar entendimiento mutuo y consenso.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué es la Acción Estratégica según Habermas?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">Usar el lenguaje para manipular y lograr fines personales.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué estudia la Pragmática?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">El lenguaje en uso, no como sistema abstracto.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Quién es el principal referente de los actos de habla?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">John Austin y John Searle.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué son las pretensiones de validez en Habermas?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">Verdad, rectitud, sinceridad y comprehensibilidad.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿En qué se diferencia la acción comunicativa de la estratégica?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">En la intención de lograr consenso vs. manipulación.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-moya">
+                <div class="card-inner">
+                    <div class="card-front moya-color">
+                        <div class="question">¿Qué es el acto locutivo?</div>
+                        <div class="author">Constanza Moya</div>
+                    </div>
+                    <div class="card-back moya-back">
+                        <div class="answer">El acto de decir algo con sentido y referencia.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Héctor Schmucler -->
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿En qué consiste el "Triunfo" de la comunicación?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Se convirtió en industria masiva y campo de estudio popular.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿En qué consiste la "Derrota" de la comunicación?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Fracasó en su promesa de ser herramienta de liberación y diálogo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué crítica hace Schmucler al campo de estudios?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Se volvió instrumental y perdió su sentido social crítico.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué representa Schmucler en los estudios de comunicación?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">La crítica latinoamericana y la autocrítica del campo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué promesa incumplida identifica Schmucler?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">La comunicación como herramienta para democracia real y entendimiento.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿En qué se convirtió la comunicación según Schmucler?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">En herramienta de dominación y campo de estudio técnico.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué contexto influye en la crítica de Schmucler?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">La realidad latinoamericana y su experiencia en el campo.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué propone Schmucler para la comunicación?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Recuperar su sentido crítico y social, no solo técnico.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Cómo ve Schmucler la tecnología en la comunicación?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Como un instrumento que puede ser usado para dominar o liberar.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-schmucler">
+                <div class="card-inner">
+                    <div class="card-front schmucler-color">
+                        <div class="question">¿Qué significa que la comunicación sea instrumental?</div>
+                        <div class="author">Héctor Schmucler</div>
+                    </div>
+                    <div class="card-back schmucler-back">
+                        <div class="answer">Que se reduce a técnicas sin reflexión crítica sobre su sentido social.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarjetas de Mihael - Consejos para estudiar con tarjetas -->
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿No entiendes a un autor?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">Dale click al nombre de ese autor al inicio de la pagina.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿Qué técnica usar para memorizar con tarjetas?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">Usa el sistema de repetición espaciada: Repite más frecuentemente lo que te cuesta más.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿Cómo mejorar la retención de información?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">Explica en voz alta la respuesta antes de voltear la tarjeta para verificar.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿Cuál es el tiempo ideal de estudio con tarjetas?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">Sesiones de 15-25 minutos con descansos de 5 minutos entre ellas.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿Cómo aprovechar al máximo las tarjetas de estudio?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">Toma notas, Se optmista y toma agua.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card author-mihael mihael-card">
+                <div class="card-inner">
+                    <div class="card-front mihael-color">
+                        <div class="question">¿Qué hacer cuando te atoras en una tarjeta?</div>
+                        <div class="author">Mihael - Consejos</div>
+                    </div>
+                    <div class="card-back mihael-back">
+                        <div class="answer">No pases demasiado tiempo. Anótala para repasarla después y continúa.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Guía de Estudio de Teorías Clásicas de la Comunicación- <span id="totalCards">56</span> tarjetas</p>
+            <p>Espero te sirvan mucho | Web Developed by Lincer0</p>
+        </div>
+    </div>
+
+    <script>
+        // Variables para controlar el estado de visibilidad
+        let mihaelCardsVisible = true;
+        let currentFilter = null; // Almacena el autor actualmente filtrado
+        
+        // Función para voltear una tarjeta individual
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+        
+        // Función para voltear todas las tarjetas
+        function flipAllCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('flipped');
+            });
+        }
+        
+        // Función para reiniciar todas las tarjetas
+        function resetAllCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.remove('flipped');
+            });
+        }
+        
+        // Función para mezclar las tarjetas
+        function shuffleCards() {
+            const container = document.getElementById('cardContainer');
+            const cards = Array.from(container.children);
+            
+            // Filtrar las tarjetas que están ocultas
+            const visibleCards = cards.filter(card => !card.classList.contains('hidden'));
+            
+            // Mezclar solo las tarjetas visibles
+            for (let i = visibleCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                container.insertBefore(visibleCards[j], visibleCards[i]);
+            }
+        }
+        
+        // Función para alternar la visibilidad de las tarjetas de Mihael
+        function toggleMihaelCards() {
+            const toggleBtn = document.getElementById('toggleMihaelBtn');
+            const mihaelLegend = document.getElementById('mihaelLegend');
+            
+            mihaelCardsVisible = !mihaelCardsVisible;
+            
+            if (mihaelCardsVisible) {
+                // Mostrar tarjetas de Mihael
+                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Mihael';
+                mihaelLegend.classList.remove('inactive');
+            } else {
+                // Ocultar tarjetas de Mihael
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i> Mostrar Mihael';
+                mihaelLegend.classList.add('inactive');
+            }
+            
+            // Actualizar visibilidad según el filtro actual
+            updateCardVisibility();
+        }
+        
+        // Función para filtrar tarjetas por autor
+        function filterByAuthor(author) {
+            const legendItems = document.querySelectorAll('.legend-item');
+            
+            // Si ya está activo este filtro, desactivarlo
+            if (currentFilter === author) {
+                currentFilter = null;
+                legendItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+            } else {
+                // Activar este filtro
+                currentFilter = author;
+                legendItems.forEach(item => {
+                    if (item.getAttribute('data-author') === author) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Actualizar visibilidad de las tarjetas
+            updateCardVisibility();
+        }
+        
+        // Función para actualizar la visibilidad de todas las tarjetas
+        function updateCardVisibility() {
+            const cards = document.querySelectorAll('.card');
+            const cardCount = document.getElementById('cardCount');
+            const totalCardsSpan = document.getElementById('totalCards');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const cardAuthor = Array.from(card.classList).find(cls => cls.startsWith('author-'));
+                const authorName = cardAuthor ? cardAuthor.replace('author-', '') : '';
+                
+                // Determinar si la tarjeta debe estar visible
+                let shouldBeVisible = true;
+                
+                // Aplicar filtro por autor si está activo
+                if (currentFilter && authorName !== currentFilter) {
+                    shouldBeVisible = false;
+                }
+                
+                // Aplicar filtro de Mihael si está activo y la tarjeta es de Mihael
+                if (!mihaelCardsVisible && authorName === 'mihael') {
+                    shouldBeVisible = false;
+                }
+                
+                // Aplicar visibilidad
+                if (shouldBeVisible) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Actualizar contador
+            totalCardsSpan.textContent = visibleCount;
+            
+            if (currentFilter) {
+                cardCount.textContent = `Mostrando: ${visibleCount} tarjetas de ${getAuthorName(currentFilter)}`;
+            } else if (!mihaelCardsVisible) {
+                cardCount.textContent = `Total: ${visibleCount} tarjetas - 10 por autor teórico`;
+            } else {
+                cardCount.textContent = `Total: ${visibleCount} tarjetas - 10 por autor teórico + 6 consejos de estudio`;
+            }
+        }
+        
+        // Función para obtener el nombre completo del autor
+        function getAuthorName(authorKey) {
+            const authorNames = {
+                'adorno': 'Adorno & Horkheimer',
+                'lazarsfeld': 'Lazarsfeld & Merton',
+                'andion': 'Eduardo Andión',
+                'moya': 'Constanza Moya',
+                'schmucler': 'Héctor Schmucler',
+                'mihael': 'Consejos'
+            };
+            
+            return authorNames[authorKey] || authorKey;
+        }
+        
+        // Asignar eventos a los elementos de la leyenda
+        document.addEventListener('DOMContentLoaded', function() {
+            // Eventos para las tarjetas
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    flipCard(this);
+                });
+            });
+            
+            // Eventos para los elementos de la leyenda
+            const legendItems = document.querySelectorAll('.legend-item');
+            legendItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const author = this.getAttribute('data-author');
+                    filterByAuthor(author);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
